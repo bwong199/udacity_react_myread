@@ -20,7 +20,7 @@ class App extends React.Component {
        * pages, as well as provide a good URL they can bookmark and share.
        */
       showSearchPage: false,
-      books: [], 
+      books: [],
       currentlyReading: [],
       wantToRead: [],
       finishedReading: []
@@ -44,31 +44,27 @@ class App extends React.Component {
     console.log(bookID)
     console.log(status)
 
-    update(bookID,status).then(data => console.log(data))
+    update(bookID, status).then(data => console.log(data)).then(
+      getAll().then(
+        this.forceUpdate()
 
-    getAll().then(data => this.setState({ books: data }, function () {
-      console.log(this.state)
-      this.forceUpdate()
-    }))
+      )
+    )
   }
 
   getAllBooks() {
-    getAll()
-    .then(data => this.setState({ books: data }, function () {
-
-      console.log(data);
-
-      const currentlyReading =  data.filter(book => book.shelf == "currentlyReading")
-      
-      this.setState({currentlyReading})
-      const wantToRead =  data.filter(book => book.shelf == "wantToRead")
-
-      this.setState({wantToRead})
-
-      const finishedReading =  data.filter(book => book.shelf == "read")
-
-      this.setState({finishedReading})
-    }))
+      getAll().then(
+          data =>   
+          this.setState({ 
+            currentlyReading :  data.filter(book => book.shelf == "currentlyReading"),
+            wantToRead : data.filter(book => book.shelf == "wantToRead"),
+            finishedReading : data.filter(book => book.shelf == "read")
+          })
+      ).then(
+          () => {
+            console.log(this.state);
+          }
+        )       
   }
 
   render() {
