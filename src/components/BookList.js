@@ -2,27 +2,30 @@ import React from 'react'
 // import * as BooksAPI from './BooksAPI'
 import '../styles/App.css'
 import BookItem from './BookItem';
-
-class WantToRead extends React.Component {
+class BookList extends React.Component {
 
     handleReadStatus = (bookID, status) => {
         this.props.onSelectReadStatus(bookID, status)
     }
-    
+
     render() {
         return (
             <div>
                 <div className="bookshelf">
-                    <h2 className="bookshelf-title">Want to Read</h2>
+                    <h2 className="bookshelf-title">{this.props.shelf}</h2>
                     <div className="bookshelf-books">
-                    <ol className="books-grid">
+                        <ol className="books-grid">
                         {
                             this.props.books.length > 0 ?
                             this.props.books.map((book, index) => {
                                 return (
                                     <BookItem key={index} book={book} onSelectReadStatus={this.handleReadStatus}/>
                                 )
-                            }): <div></div>
+                            }): 
+                            <div>
+                                <p>No book in "{this.props.shelf}"</p>
+
+                            </div>
                         }
                         </ol>
                     </div>
@@ -32,5 +35,4 @@ class WantToRead extends React.Component {
     }
 }
 
-export default WantToRead
-
+export default BookList

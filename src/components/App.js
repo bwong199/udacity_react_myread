@@ -1,12 +1,10 @@
 import React from 'react'
 // import * as BooksAPI from './BooksAPI'
 import '../styles/App.css'
-import CurrentlyReading from './CurrentlyReading';
-import WantToRead from './WantToRead';
-import FinishedReading from './FinishedReading';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { get, getAll, update } from '../actions/BooksAPI'
 import Search from './Search';
+import BookList from './BookList';
 
 class App extends React.Component {
 
@@ -88,9 +86,13 @@ class App extends React.Component {
               </div>
               <div className="list-books-title">
                 <h1>MyReads</h1>
-                <CurrentlyReading books={this.state.currentlyReading} onSelectReadStatus={this.handleReadStatus} />
+                <BookList shelf="Currently Reading" books={this.state.currentlyReading} onSelectReadStatus={this.handleReadStatus} />
+                <BookList shelf="Want to Read" books={this.state.wantToRead} onSelectReadStatus={this.handleReadStatus} />
+                <BookList shelf="Read" books={this.state.finishedReading} onSelectReadStatus={this.handleReadStatus} />
+
+                {/* <CurrentlyReading books={this.state.currentlyReading} onSelectReadStatus={this.handleReadStatus} />
                 <WantToRead books={this.state.wantToRead} onSelectReadStatus={this.handleReadStatus} />
-                <FinishedReading books={this.state.finishedReading} onSelectReadStatus={this.handleReadStatus} />
+                <FinishedReading books={this.state.finishedReading} onSelectReadStatus={this.handleReadStatus} /> */}
               </div>
               <div className="list-books-content">
                 <div>
