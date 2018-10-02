@@ -19,7 +19,7 @@ class BookList extends React.Component {
                             this.props.books.length > 0 ?
                             this.props.books.map((book, index) => {
                                 return (
-                                    <BookItem key={index} book={book} onSelectReadStatus={this.handleReadStatus}/>
+                                    <BookItem key={book.id} book={book} onSelectReadStatus={this.handleReadStatus}/>
                                 )
                             }): 
                             <div>

@@ -41,11 +41,11 @@ class BookItem extends React.Component {
                         <div className="book-title">{this.props.book.title} </div>
 
                           {
-                            this.props.book.authors.map((author, index) => {
+                            this.props.book.authors ? this.props.book.authors.map((author, index) => {
                                 return (
                                     <div key={index} className="book-authors">{author}</div>    
                                     )
-                            })
+                            }): <div/>
                         }
 
 

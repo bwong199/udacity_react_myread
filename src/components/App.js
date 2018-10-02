@@ -52,18 +52,19 @@ class App extends React.Component {
   }
 
   getAllBooks() {
-      getAll().then(
-          data =>   
-          this.setState({ 
-            currentlyReading :  data.filter(book => book.shelf == "currentlyReading"),
-            wantToRead : data.filter(book => book.shelf == "wantToRead"),
-            finishedReading : data.filter(book => book.shelf == "read")
-          })
-      ).then(
-          () => {
-            console.log(this.state);
-          }
-        )       
+    let self = this;
+    getAll().then(
+      data =>
+      self.setState({
+          currentlyReading: data.filter(book => book.shelf == "currentlyReading"),
+          wantToRead: data.filter(book => book.shelf == "wantToRead"),
+          finishedReading: data.filter(book => book.shelf == "read")
+        })
+    ).then(
+      () => {
+        console.log(this.state);
+      }
+    )
   }
 
   render() {
@@ -73,7 +74,7 @@ class App extends React.Component {
           <div className="search-books">
             <div className="search-books-bar">
               <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
-              <Search/>
+              <Search />
             </div>
             <div className="search-books-results">
               <ol className="books-grid"></ol>
@@ -89,10 +90,6 @@ class App extends React.Component {
                 <BookList shelf="Currently Reading" books={this.state.currentlyReading} onSelectReadStatus={this.handleReadStatus} />
                 <BookList shelf="Want to Read" books={this.state.wantToRead} onSelectReadStatus={this.handleReadStatus} />
                 <BookList shelf="Read" books={this.state.finishedReading} onSelectReadStatus={this.handleReadStatus} />
-
-                {/* <CurrentlyReading books={this.state.currentlyReading} onSelectReadStatus={this.handleReadStatus} />
-                <WantToRead books={this.state.wantToRead} onSelectReadStatus={this.handleReadStatus} />
-                <FinishedReading books={this.state.finishedReading} onSelectReadStatus={this.handleReadStatus} /> */}
               </div>
               <div className="list-books-content">
                 <div>
