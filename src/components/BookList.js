@@ -6,8 +6,6 @@ class BookList extends React.Component {
 
     handleReadStatus = (bookID, status) => {
         this.props.onSelectReadStatus(bookID, status)
-
-        this.handleReadStatus = this.handleReadStatus.bind(this);
     }
 
     render() {
