@@ -43,22 +43,20 @@ class App extends React.Component {
     console.log(bookID)
     console.log(status)
 
-    update(bookID, status).then(data => console.log(data)).then(function(data){
-      getAll()
-    })
+    update(bookID, status).then(data => console.log(data)).then(this.getAllBooks())
   }
 
   getAllBooks() {
     let self = this;
     getAll().then(
       function(data){
+        debugger;
         self.setState({
           currentlyReading: data.filter(book => book.shelf == "currentlyReading"),
           wantToRead: data.filter(book => book.shelf == "wantToRead"),
           finishedReading: data.filter(book => book.shelf == "read")
         })
       }
-
     ).then(
       () => {
         console.log(this.state);

@@ -1,7 +1,7 @@
 import React from 'react'
 // import * as BooksAPI from './BooksAPI'
 import '../styles/App.css'
-import {search} from '../actions/BooksAPI'
+import { search } from '../actions/BooksAPI'
 import BookList from './BookList';
 import { get, getAll, update } from '../actions/BooksAPI'
 
@@ -10,37 +10,51 @@ class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          /**
-           * TODO: Instead of using this state variable to keep track of which page
-           * we're on, use the URL in the browser's address bar. This will ensure that
-           * users can use the browser's back and forward buttons to navigate between
-           * pages, as well as provide a good URL they can bookmark and share.
-           */
-          searchResults: []
+            /**
+             * TODO: Instead of using this state variable to keep track of which page
+             * we're on, use the URL in the browser's address bar. This will ensure that
+             * users can use the browser's back and forward buttons to navigate between
+             * pages, as well as provide a good URL they can bookmark and share.
+             */
+            searchResults: []
         }
 
         this.handleReadStatus = this.handleReadStatus.bind(this);
         this.bookSearch = this.bookSearch.bind(this);
-      }
+    }
 
-      
+    getAllBooks() {
+        let self = this;
+        getAll().then(
+            function (data) {
+                debugger;
+                self.setState({
+                    currentlyReading: data.filter(book => book.shelf == "currentlyReading"),
+                    wantToRead: data.filter(book => book.shelf == "wantToRead"),
+                    finishedReading: data.filter(book => book.shelf == "read")
+                })
+            }
+        ).then(
+            () => {
+                console.log(this.state);
+            }
+        )
+    }
+    
     bookSearch = (queryText) => {
         search(queryText)
-        .then( data => 
-            this.setState({ searchResults: data})
-        ).then( () => console.log(this.state.searchResults))
+            .then(data =>
+                this.setState({ searchResults: data })
+            ).then(() => console.log(this.state.searchResults))
     }
     handleReadStatus = (bookID, status) => {
         console.log(bookID)
         console.log(status)
-    
+
         update(bookID, status).then(data => console.log(data)).then(
-          getAll().then(
-            this.forceUpdate()
-    
-          )
+            getAll()
         )
-      }
+    }
     render() {
         return (
             <div>
@@ -52,11 +66,11 @@ class Search extends React.Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                    <input type="text" onChange={event =>  this.bookSearch(event.target.value)} placeholder="Search by title or author" />
+                    <input type="text" onChange={event => this.bookSearch(event.target.value)} placeholder="Search by title or author" />
                     <div className="list-books-title">
-                <h1>Search Results</h1>
-                <BookList shelf="Search Results" books={this.state.searchResults} onSelectReadStatus={this.handleReadStatus} />
-              </div>
+                        <h1>Search Results</h1>
+                        <BookList shelf="Search Results" books={this.state.searchResults} onSelectReadStatus={this.handleReadStatus} />
+                    </div>
                 </div>
             </div>
         )
