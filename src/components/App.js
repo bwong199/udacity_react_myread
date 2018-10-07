@@ -7,10 +7,8 @@ import Search from './Search';
 import BookList from './BookList';
 
 class App extends React.Component {
-
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       /**
        * TODO: Instead of using this state variable to keep track of which page
@@ -24,6 +22,8 @@ class App extends React.Component {
       wantToRead: [],
       finishedReading: []
     }
+
+    this.handleReadStatus = this.handleReadStatus.bind(this);
   }
 
   getToken = () => {
@@ -43,23 +43,22 @@ class App extends React.Component {
     console.log(bookID)
     console.log(status)
 
-    update(bookID, status).then(data => console.log(data)).then(
-      getAll().then(
-        this.forceUpdate()
-
-      )
-    )
+    update(bookID, status).then(data => console.log(data)).then(function(data){
+      getAll()
+    })
   }
 
   getAllBooks() {
     let self = this;
     getAll().then(
-      data =>
-      self.setState({
+      function(data){
+        self.setState({
           currentlyReading: data.filter(book => book.shelf == "currentlyReading"),
           wantToRead: data.filter(book => book.shelf == "wantToRead"),
           finishedReading: data.filter(book => book.shelf == "read")
         })
+      }
+
     ).then(
       () => {
         console.log(this.state);

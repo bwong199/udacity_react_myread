@@ -4,12 +4,6 @@ import '../styles/App.css'
 import {get, getAll, update, search } from '../actions/BooksAPI'
 
 class BookItem extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            shelf: ""
-        }
-    }
 
     handleReadStatus = (event) => {
         let status = event.target.value;
@@ -47,8 +41,6 @@ class BookItem extends React.Component {
                                     )
                             }): <div/>
                         }
-
-
                     </div>
                 </li>
             </div>

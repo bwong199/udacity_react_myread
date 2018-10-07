@@ -7,8 +7,8 @@ import { get, getAll, update } from '../actions/BooksAPI'
 
 class Search extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           /**
            * TODO: Instead of using this state variable to keep track of which page
@@ -18,6 +18,9 @@ class Search extends React.Component {
            */
           searchResults: []
         }
+
+        this.handleReadStatus = this.handleReadStatus.bind(this);
+        this.bookSearch = this.bookSearch.bind(this);
       }
 
       

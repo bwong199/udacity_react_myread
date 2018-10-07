@@ -6,6 +6,8 @@ class BookList extends React.Component {
 
     handleReadStatus = (bookID, status) => {
         this.props.onSelectReadStatus(bookID, status)
+
+        this.handleReadStatus = this.handleReadStatus.bind(this);
     }
 
     render() {
@@ -16,7 +18,7 @@ class BookList extends React.Component {
                     <div className="bookshelf-books">
                         <ol className="books-grid">
                         {
-                            this.props.books.length > 0 ?
+                            this.props.books && this.props.books.length > 0 ?
                             this.props.books.map((book, index) => {
                                 return (
                                     <BookItem key={book.id} book={book} onSelectReadStatus={this.handleReadStatus}/>
